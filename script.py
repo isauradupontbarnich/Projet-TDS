@@ -9,7 +9,11 @@ if __name__ == '__main__':
     # 1: Normalize and resample the signal at 8kHz
     # -------------------------------------------------------
     
+<<<<<<< HEAD
     sampling_rate, speech = wavfile.read('speech.wav')
+=======
+    sampling_rate, speech = wavfile.read('./audio/speech.wav')
+>>>>>>> ead3d7fc0568b8f20081f51c726af1a61a1178f5
     
     # Normalization
     speech = np.array(speech)
@@ -22,7 +26,11 @@ if __name__ == '__main__':
     sampling_rate = target_sampling_rate
     
     # Save resampled signal
+<<<<<<< HEAD
     wavfile.write("speech_resampled.wav", sampling_rate, speech)
+=======
+    wavfile.write("./results/speech_resampled.wav", sampling_rate, speech)
+>>>>>>> ead3d7fc0568b8f20081f51c726af1a61a1178f5
 
     # -------------------------------------------------------
     # 2: Block decomposition of the signal
@@ -35,7 +43,11 @@ if __name__ == '__main__':
     
     # Check if the reconstruction of the signal is correct
     rec = blocks_reconstruction(windowed_blocks, w, speech.size, R = 0.5) 
+<<<<<<< HEAD
     wavfile.write("block_reconstruction.wav", sampling_rate, rec)   
+=======
+    wavfile.write("./results/block_reconstruction.wav", sampling_rate, rec)   
+>>>>>>> ead3d7fc0568b8f20081f51c726af1a61a1178f5
      
     # -------------------------------------------------------
     # 3: Encodes the signal block by block
