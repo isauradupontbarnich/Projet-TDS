@@ -9,11 +9,7 @@ if __name__ == '__main__':
     # 1: Normalize and resample the signal at 8kHz
     # -------------------------------------------------------
     
-<<<<<<< HEAD
     sampling_rate, speech = wavfile.read('speech.wav')
-=======
-    sampling_rate, speech = wavfile.read('./audio/speech.wav')
->>>>>>> ead3d7fc0568b8f20081f51c726af1a61a1178f5
     
     # Normalization
     speech = np.array(speech)
@@ -26,11 +22,7 @@ if __name__ == '__main__':
     sampling_rate = target_sampling_rate
     
     # Save resampled signal
-<<<<<<< HEAD
     wavfile.write("speech_resampled.wav", sampling_rate, speech)
-=======
-    wavfile.write("./results/speech_resampled.wav", sampling_rate, speech)
->>>>>>> ead3d7fc0568b8f20081f51c726af1a61a1178f5
 
     # -------------------------------------------------------
     # 2: Block decomposition of the signal
@@ -42,12 +34,15 @@ if __name__ == '__main__':
     n_blocks, block_size = blocks.shape
     
     # Check if the reconstruction of the signal is correct
-    rec = blocks_reconstruction(windowed_blocks, w, speech.size, R = 0.5) 
-<<<<<<< HEAD
-    wavfile.write("block_reconstruction.wav", sampling_rate, rec)   
-=======
-    wavfile.write("./results/block_reconstruction.wav", sampling_rate, rec)   
->>>>>>> ead3d7fc0568b8f20081f51c726af1a61a1178f5
+    rec = blocks_reconstruction(windowed_blocks, w, speech.size, R = 0.5)
+
+
+    wavfile.write("block_reconstruction.wav", sampling_rate, rec) 
+    #on vérifie l'erreur  
+    dif=rec-speech
+    dif=np.absolute(dif)
+    print(np.max(dif))
+
      
     # -------------------------------------------------------
     # 3: Encodes the signal block by block
@@ -102,6 +97,7 @@ if __name__ == '__main__':
       
     wavfile.write("./results/decoded_speech_noise.wav", sampling_rate, 
      decoded_speech)
+
     
     # -----------------------------------------------------------
     # 6: Decodes each block based upon the pitch (Bonus Question)
@@ -131,3 +127,4 @@ if __name__ == '__main__':
       
     wavfile.write("./results/decoded_speech_pitch.wav", sampling_rate, 
      decoded_speech)
+
