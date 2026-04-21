@@ -78,7 +78,7 @@ if __name__ == '__main__':
     decoded_speech = blocks_reconstruction(blocks_decoded, w, speech.size, 
       R = 0.5)
       
-    wavfile.write("./results/decoded_speech.wav", sampling_rate, decoded_speech)
+    wavfile.write("decoded_speech.wav", sampling_rate, decoded_speech)
     
     # -------------------------------------------------------
     # 5: Decodes each block based upon white noise
@@ -95,7 +95,7 @@ if __name__ == '__main__':
     decoded_speech = blocks_reconstruction(blocks_decoded, w, speech.size, 
       R = 0.5)
       
-    wavfile.write("./results/decoded_speech_noise.wav", sampling_rate, 
+    wavfile.write("decoded_speech_noise.wav", sampling_rate, 
      decoded_speech)
 
     
@@ -125,6 +125,6 @@ if __name__ == '__main__':
     decoded_speech = blocks_reconstruction(blocks_decoded, w, speech.size, 
       R = 0.5)
       
-    wavfile.write("./results/decoded_speech_pitch.wav", sampling_rate, 
+    wavfile.write("decoded_speech_pitch.wav", sampling_rate, 
      decoded_speech)
 

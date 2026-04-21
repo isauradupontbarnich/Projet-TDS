@@ -179,6 +179,16 @@ def lpc_encode(x, p):
     
      
 def lpc_decode(coefs, source):
+    N=len(source)
+    p=len(coefs)
+    s=np.zeros(N)
+    for n in range(N):
+        s[n]=source[n]
+        for k in range(1,p+1):
+            if n-k>=0:
+                s[n]+=coefs[k-1]*s[n-k]
+    return s
+        
 
     """
     Synthesizes a speech segment using the LPC filter and an excitation source
