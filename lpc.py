@@ -7,26 +7,33 @@ from scipy.signal import resample
 from scipy.signal.windows import hann 
 from scipy.linalg import solve_toeplitz, toeplitz
 
+
+
 # -----------------------------------------------------------------------------
 # Block decomposition
 # -----------------------------------------------------------------------------
 
 def blocks_decomposition(x, w, R = 0.5):
     #Padding
-    dt
     nperseg=len(w)
     noverlap=R*nperseg
     hop_length = int(nperseg - noverlap)
     x_padded = np.pad(x, (nperseg//2, nperseg//2), 'constant', constant_values=(0, 0))
     # Block decomposition
-    blocks, t = [], []
+    windowed_blocks= []
+    blocks=[]
     offset = 0
+    t=[]
     while offset <= x.size:
-        blocks.append(x_padded[offset: offset + nperseg] * w)
+        blocks.append(x_padded[offset: offset + nperseg])
+        windowed_blocks.append(x_padded[offset: offset + nperseg] * w)
         t.append(offset)
         offset += hop_length
+    blocks=np.array(blocks)
+    windowed_blocks=np.array(windowed_blocks)
 
-    return blocks, dt*np.array(t)
+    return blocks, windowed_blocks
+
 
 
 
@@ -53,10 +60,30 @@ def blocks_decomposition(x, w, R = 0.5):
     """
     
     # A COMPLETER
-    return 0
+
     
       
 def blocks_reconstruction(blocks, w, signal_size, R = 0.5):
+    nperseg=len(w)
+    noverlap= int(R*nperseg)
+    hop_length = nperseg - noverlap
+    nblocks = len(blocks)
+    
+    
+    
+    reconstruction = np.zeros(signal_size + nperseg)
+    norm = np.zeros_like(reconstruction)
+    offset = 0
+    for block in blocks:
+        
+        reconstruction[offset: offset + nperseg] += block * w   
+        norm[offset: offset + nperseg] += w * w
+        offset += hop_length
+
+    reconstruction = reconstruction[nperseg//2:-nperseg//2]
+    norm = norm[nperseg//2:-nperseg//2]
+        
+    return reconstruction/norm
 
     """
     Reconstruct a signal from overlapping blocks
@@ -82,7 +109,7 @@ def blocks_reconstruction(blocks, w, signal_size, R = 0.5):
     """
 
     # A COMPLETER
-    return 0
+
     
 # -----------------------------------------------------------------------------
 # Linear Predictive coding
