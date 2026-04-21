@@ -6,6 +6,7 @@ import scipy.io.wavfile as wavfile
 from scipy.signal import resample
 from scipy.signal.windows import hann 
 from scipy.linalg import solve_toeplitz, toeplitz
+from scipy.signal import lfilter
 
 
 
@@ -158,9 +159,23 @@ def lpc_encode(x, p):
       prediction: numpy array
         lpc prediction
     """
+    N = len(x)
+    #calcul des autocorrelations (r_s[0],..., r_s[p]):p+1 valeurs, on reprend la formule de l'enonce
+    r = np.array([autocovariance(x, k) for k in range(p + 1)])
+ 
+    # résolution du système de Toeplitz, on a R * alpha = b, on utilise solve_toeplitz(c, b) 
+    first_row_col = r[:p]        # [r[0], r[1], ..., r[p-1]] = 1ère ligne ET colonne
+    b = r[1:p + 1]               # [r[1], r[2], ..., r[p]]
     
-    # A COMPLETER
-    return 0
+    coefs = solve_toeplitz(first_row_col, b)
+    
+    # on cherche la prediction s_tilde[n], où pour n < k, on considère s[n-k] = 0 (signal nul avant le début)
+    
+    num = np.concatenate([[0], coefs])
+    prediction = lfilter(num, [1], x)
+    
+    return coefs, prediction
+    
     
      
 def lpc_decode(coefs, source):
