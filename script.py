@@ -55,14 +55,14 @@ if __name__ == '__main__':
 
         coefs, prediction = lpc_encode(windowed_block, p)
         residual = windowed_block - prediction
-        voiced, pitch = estimate_pitch(block, sampling_rate, threshold=1)
+        #voiced, pitch = estimate_pitch(block, sampling_rate, threshold=1)
         
         blocks_encoding.append({'coefs': coefs, 
           'residual': residual,
           'size': block.size,
-          'gain': np.std(residual),
-          'pitch': pitch,
-          'voiced': voiced})
+          'gain': np.std(residual)})
+          #'pitch': pitch,
+         # 'voiced': voiced})
                
     # -------------------------------------------------------
     # 4: Decodes each block based upon the residual
@@ -102,7 +102,7 @@ if __name__ == '__main__':
     # -----------------------------------------------------------
     # 6: Decodes each block based upon the pitch (Bonus Question)
     # -----------------------------------------------------------
-    
+    """
     blocks_decoded = []
     for encoding in blocks_encoding:
       
@@ -127,4 +127,4 @@ if __name__ == '__main__':
       
     wavfile.write("decoded_speech_pitch.wav", sampling_rate, 
      decoded_speech)
-
+"""

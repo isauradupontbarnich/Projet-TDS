@@ -117,8 +117,14 @@ def blocks_reconstruction(blocks, w, signal_size, R = 0.5):
 # -----------------------------------------------------------------------------
 
 def autocovariance(x, k):
+  N=len(x)
+  if k>N: 
+    C=0
+  else : 
+    C=(1/N)*np.sum(x[:N-k]*x[k:])
+  return C
 
-    """
+"""
     Estimates the autocovariance C[k] of signal x
     
     Parameters
@@ -131,7 +137,7 @@ def autocovariance(x, k):
     """
     
     # A COMPLETER
-    return 0
+    
         
     
 def lpc_encode(x, p):
@@ -165,7 +171,7 @@ def lpc_encode(x, p):
  
     # résolution du système de Toeplitz, on a R * alpha = b, on utilise solve_toeplitz(c, b) 
     first_row_col = r[:p]        # [r[0], r[1], ..., r[p-1]] = 1ère ligne ET colonne
-    b = r[1:p + 1]               # [r[1], r[2], ..., r[p]]
+    b = r[1:]               # [r[1], r[2], ..., r[p]]
     
     coefs = solve_toeplitz(first_row_col, b)
     
