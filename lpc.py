@@ -210,7 +210,7 @@ def lpc_decode(coefs, source):
     """
     
     # A COMPLETER
-    return 0
+    
     
 
 def estimate_pitch(signal, sample_rate, min_freq=50, max_freq=200, threshold=1):
