@@ -1,3 +1,18 @@
+##Question 2
+A chaque itération, on implémente l'offset $k \Delta n$
+
+$$\text{rec}[k\Delta n : k\Delta n + M] \mathrel{+}= \text{block} \times h$$
+$$\text{norm}[k\Delta n : k\Delta n + M] \mathrel{+}= h^2$$
+
+Alors on a que: 
+
+$$\text{rec}[n] = \sum_{k \in \mathbb{Z}} x[n] \cdot h[n - k\Delta n]^2 = x[n] \cdot \underbrace{\sum_{k \in \mathbb{Z}} h[n - k\Delta n]^2}_{= \text{norm}[n]}$$
+
+Donc
+
+$$x[n] = \frac{\text{rec}[n]}{\text{norm}[n]}$$
+Donc on peut reconstruire le signal original à partir des segments fenêtrés.
+
 ## Question 3 — Dérivation du système $R\alpha = b$
 
 On cherche les coefficients $(\alpha_k)_{1 \leq k \leq p}$ qui minimisent l'erreur quadratique moyenne :
