@@ -14,8 +14,6 @@ On obtient le système de $p$ équations :
 
 $$\sum_{k=1}^{p} \alpha_k \left( \frac{1}{N} \sum_{n=0}^{N-1} s[n-k]\, s[n-j] \right) = \frac{1}{N} \sum_{n=0}^{N-1} s[n]\, s[n-j], \quad j = 1, \ldots, p$$
 
-### Identification avec $r_s$
-
 En notant $r_s[k] = \frac{1}{N} \sum_{n=0}^{N-1-k} s[n]\, s[n+k]$ la fonction d'autocorrélation du signal, on reconnaît :
 
 $$\frac{1}{N} \sum_{n=0}^{N-1} s[n-k]\, s[n-j] = r_s[|k - j|]$$
@@ -26,9 +24,7 @@ Le système devient donc, pour $j = 1, \ldots, p$ :
 
 $$\sum_{k=1}^{p} \alpha_k\, r_s[|k-j|] = r_s[j]$$
 
-### Écriture matricielle
-
-En posant le vecteur $\alpha = (\alpha_1, \ldots, \alpha_p)^T$ et en définissant :
+On peut le réecrire avec des matrices : en posant le vecteur $\alpha = (\alpha_1, \ldots, \alpha_p)^T$ et en définissant :
 
 $$R_{i,j} = r_s[|i-j|], \qquad b_i = r_s[i]$$
 
@@ -38,8 +34,8 @@ $$R\alpha = b$$
 
 ### Propriété de Toeplitz
 
-La matrice $R$ est une **matrice de Toeplitz symétrique** : chaque valeur sur une même diagonale est constante, puisque $R_{i,j}$ ne dépend que de $|i-j|$. Elle s'écrit explicitement :
+La matrice $R$ est une matrice de Toeplitz symétrique : chaque valeur sur une même diagonale est constante, puisque $R_{i,j}$ ne dépend que de $|i-j|$. Elle s'écrit explicitement :
 
 $$R = \begin{pmatrix} r_s[0] & r_s[1] & \cdots & r_s[p-1] \\ r_s[1] & r_s[0] & \cdots & r_s[p-2] \\ \vdots & & \ddots & \vdots \\ r_s[p-1] & r_s[p-2] & \cdots & r_s[0] \end{pmatrix}, \qquad b = \begin{pmatrix} r_s[1] \\ r_s[2] \\ \vdots \\ r_s[p] \end{pmatrix}$$
 
-Cette structure particulière permet d'utiliser l'algorithme de Levinson-Durbin (implémenté dans `scipy.linalg.solve_toeplitz`), qui résout le système en $\mathcal{O}(p^2)$ au lieu de $\mathcal{O}(p^3)$ pour une inversion de matrice générale.
+Cette structure particulière permet d'utiliser l'algorithme de Levinson-Durbin (implémenté dans `scipy.linalg.solve_toeplitz`).
